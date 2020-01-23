@@ -16,4 +16,8 @@ defmodule ReactionTrackerWeb.TrackerView do
     %{data: render_many(trackers, ReactionTrackerWeb.TrackerView, "tracker.json")}
   end
 
+  def render("show.json", %{tracker: tracker}) do
+    %{data: render_one(tracker, ReactionTrackerWeb.TrackerView, "tracker.json")}
+  end
+
 end

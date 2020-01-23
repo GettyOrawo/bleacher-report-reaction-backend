@@ -1,7 +1,8 @@
 defmodule ReactionTrackerWeb.TrackerController do
   use ReactionTrackerWeb, :controller
 
-  alias ReactionTracker.{ErrorView, Repo, Tracker}
+  alias ReactionTracker.{Repo, Tracker}
+  alias ReactionTrackerWeb.ErrorView
   alias Plug.Conn
 
   @doc """
@@ -31,9 +32,9 @@ defmodule ReactionTrackerWeb.TrackerController do
   saves a new reaction in the database from a payload
   """
   def create(conn, params) do
-    changeset = Repo.changeset(%Tracker{}, params)
+    changeset = Tracker.changeset(%Tracker{}, params)
 
-    case repo.insert(changeset) do
+    case Repo.insert(changeset) do
       {:ok, tracker} -> 
         conn
         |> Conn.put_status(201)
