@@ -13,7 +13,7 @@ defmodule ReactionTrackerWeb.TrackerController do
   end
 
   @doc """
-  saves a new reaction in the database from a payload
+  shows a single new reaction after it's saved in the database from a payload
   """
   def show(conn, %{"id" => user_id}) do
   
@@ -24,6 +24,24 @@ defmodule ReactionTrackerWeb.TrackerController do
         conn
         |> put_status(404)
         |> render(ErrorView, "404.json", error: "Not Found")
+    end
+  end
+
+  @doc """
+  saves a new reaction in the database from a payload
+  """
+  def create(conn, params) do
+    changeset = Repo.changeset(%Tracker{}, params)
+
+    case repo.insert(changeset) do
+      {:ok, tracker} -> 
+        conn
+        |> Conn.put_status(201)
+        |> render("show.json", tracker: tracker)
+      {:error, %{errors: errors}} -> 
+        conn
+        |> put_status(422)
+        |> render(ErrorView, "422.json", %{errors: errors})
     end
   end
 end

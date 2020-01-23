@@ -10,5 +10,6 @@ defmodule ReactionTrackerWeb.Router do
 
     get "/", TrackerController, :index
     get "/:id", TrackerController, :show
+    post "/", TrackerController, :create
   end
 end
