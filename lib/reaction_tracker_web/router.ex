@@ -8,8 +8,9 @@ defmodule ReactionTrackerWeb.Router do
   scope "/", ReactionTrackerWeb do
     pipe_through :api
 
-    get "/", TrackerController, :index
-    get "/:id", TrackerController, :show
-    post "/", TrackerController, :create
+    get "/reaction", TrackerController, :index
+    get "/reaction/:id", TrackerController, :show
+    post "/reaction", TrackerController, :create
+    get "/reaction_counts/:content_id", TrackerController, :reaction_counts
   end
 end

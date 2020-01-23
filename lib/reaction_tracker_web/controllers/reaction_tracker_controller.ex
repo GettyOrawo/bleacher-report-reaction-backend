@@ -45,4 +45,22 @@ defmodule ReactionTrackerWeb.TrackerController do
         |> render(ErrorView, "422.json", %{errors: errors})
     end
   end
+
+  def reaction_counts(conn, %{"content_id" => content_id}) do
+    
+    case Repo.get(Tracker, content_id) do
+      {:ok, tracker} ->
+        reaction_count = ReactionTracker.reaction_count_by_content_id(content_id)
+
+        conn
+        |> Conn.put_status(201)
+        |> render("reaction_count.json", reaction_count: reaction_count)
+
+      {:error, errors} ->
+        conn
+        |> put_status(404)
+        |> render(ErrorView, "404.json", "return nothing")
+
+    end
+  end
 end
