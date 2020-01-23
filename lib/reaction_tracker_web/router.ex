@@ -9,5 +9,6 @@ defmodule ReactionTrackerWeb.Router do
     pipe_through :api
 
     get "/", TrackerController, :index
+    get "/:id", TrackerController, :show
   end
 end
