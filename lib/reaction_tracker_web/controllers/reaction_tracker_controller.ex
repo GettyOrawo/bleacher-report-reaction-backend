@@ -1,4 +1,4 @@
-defmodule ReactionTrackerWeb.ReactionTrackerController do
+defmodule ReactionTrackerWeb.TrackerController do
   use ReactionTrackerWeb, :controller
 
   alias ReactionTracker.{Repo, Tracker}
