@@ -13,7 +13,7 @@ defmodule ReactionTrackerWeb.Endpoint do
     at: "/",
     from: :reaction_tracker,
     gzip: false,
-    only: ~w(css fonts images js favicon.ico robots.txt)
+    only: ~w()
 
   # Code reloading can be explicitly enabled under the
   # :code_reloader configuration of your endpoint.
