@@ -8,23 +8,18 @@ defmodule ReactionTracker do
   @doc """
   gets the number of active reactions based on the content_id_reaction_count
   """
-  def  content_id_reaction_count(content_id) do
+  def reaction_count(content_id) do
+    
 
     query = from t in Tracker,
-            where: t.action == ^"add" and 
-            t.content_id == ^content_id
+            where: t.action == "add" and 
+            t.content_id == ^"#{content_id}"
 
-    Repo.all(query)
+    query
+    |> Repo.all()
     |> Enum.count
     |> to_string()
    
-  end
-
-  @doc """
-  groups reaction content by content_id and count based on a particular content_id
-  """
-  def reaction_count_by_content_id(content_id) do
-    %{content_id: content_id, reaction_count: content_id_reaction_count(content_id)}
   end
 
 end

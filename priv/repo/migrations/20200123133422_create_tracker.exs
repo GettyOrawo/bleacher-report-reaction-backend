@@ -5,7 +5,7 @@ defmodule ReactionTracker.Repo.Migrations.CreateTracker do
     create table(:reaction_tracker) do
       add :type, :string
       add :action, :string
-      add :content_id, :string, primary_key: true
+      add :content_id, :string
       add :user_id, :string
       add :reaction_type, :string
 

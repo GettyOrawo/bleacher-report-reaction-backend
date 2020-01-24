@@ -12,6 +12,13 @@ defmodule ReactionTrackerWeb.TrackerView do
     }
   end
 
+  def render("reaction_count.json", %{reaction_count: reaction_count, content_id: content_id}) do
+    %{
+      content_id: content_id,
+      reaction_count: reaction_count
+    }
+  end
+
   def render("index.json", %{trackers: trackers}) do
     %{data: render_many(trackers, ReactionTrackerWeb.TrackerView, "tracker.json")}
   end

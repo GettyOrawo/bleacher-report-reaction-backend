@@ -11,6 +11,6 @@ defmodule ReactionTrackerWeb.Router do
     get "/reaction", TrackerController, :index
     get "/reaction/:id", TrackerController, :show
     post "/reaction", TrackerController, :create
-    get "/reaction_counts/:content_id", TrackerController, :reaction_counts
+    get "/reaction_counts/:content_id", TrackerController, :reaction_counts, param: "content_id"
   end
 end
