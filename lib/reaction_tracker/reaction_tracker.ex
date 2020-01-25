@@ -12,7 +12,7 @@ defmodule ReactionTracker do
   """
   def reaction_count(content_id) do
     
-
+    #query database for all records with action add and given content_id
     query = from t in Tracker,
             where: t.action == "add" and 
             t.content_id == ^"#{content_id}"
@@ -24,30 +24,27 @@ defmodule ReactionTracker do
    
   end
 
+  @doc """
+  saves payload to database or updates if exixting
+  """
+
   def save_reaction(params) do
-    
-    %{"user_id" => user_id, 
-      "type" => type,
-      "action" => action,
-      "content_id" => content_id,
-      "reaction_type" => reaction_type
+    #convert params map keys from strings to atoms
+    params = for {key, value} <- params, into: %{}, do: {String.to_atom(key), value}
 
-      } = params
+    #get reaction by its  user id
+    reaction = Repo.get_by(Tracker, user_id: "#{params.user_id}")
 
-      params = %{
-        user_id: user_id,
-        type: type,
-        action: action,
-        content_id: content_id,
-        reaction_type: reaction_type
-      }
+    #Check if user has already reacted 
+    case reaction do
+      
+      #if user already exists update their reaction
+      %Tracker{} -> 
+        changeset = change(reaction, params)
+        IO.inspect changeset, label: "****************"
+        Repo.update(changeset)
 
-    case Repo.get_by(Tracker, user_id: user_id) do
-      reaction -> 
-        changeset = change(%Tracker{}, params)
-        Repo.insert(changeset)
-
-
+      #if user doesn't exists save a new reaction with received payload
       nil ->
         changeset = Tracker.changeset(%Tracker{}, params)
         Repo.insert(changeset)
