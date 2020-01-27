@@ -47,6 +47,11 @@ defmodule ReactionTrackerWeb.TrackerController do
     end
   end
 
+  @doc """
+  displays reactions with similar content Id's with action: "add" and their count
+  """
+
+
   def reaction_counts(conn, %{"content_id" => content_id}) do
 
     if content_id do
