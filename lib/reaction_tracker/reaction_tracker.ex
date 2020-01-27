@@ -2,7 +2,7 @@ defmodule ReactionTracker do
   @moduledoc """
   This is the context module where all miscelanious functions reside
   """
-  alias ReactionTracker.{Repo, Tracker}
+  alias ReactionTracker.{Repo, Tracker, Cache}
   import Ecto.Query, only: [from: 2]
   import Ecto.Changeset
 
@@ -30,12 +30,14 @@ defmodule ReactionTracker do
 
   def save_reaction(params) do
     ## start server
+    pid = Cache.start_link(params)
+    
+
 
     pid = ReactionTracker.Server.start_link(params)
 
-    ReactionTracker.Server.save_reaction(pid)
+    IO.inspect ReactionTracker.Server.save_reaction(pid), label: "###########"
 
-    IO.inspect(pid, label: "****************")
   end
 
   def create_or_update_reaction(params) do
@@ -43,7 +45,7 @@ defmodule ReactionTracker do
     params = for {key, value} <- params, into: %{}, do: {String.to_atom(key), value}
 
     #get reaction by its  user id
-    reaction = Repo.get_by(Tracker, user_id: "#{params.user_id}")
+    reaction = Repo.get_by(Tracker, user_id: params.user_id)
 
     #Check if user has already reacted
     case reaction do
@@ -51,7 +53,6 @@ defmodule ReactionTracker do
       #if user already exists update their reaction
       %Tracker{} ->
         changeset = change(reaction, params)
-        IO.inspect changeset, label: "****************"
         Repo.update(changeset)
 
       #if user doesn't exists save a new reaction with received payload

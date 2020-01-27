@@ -34,7 +34,6 @@ defmodule ReactionTrackerWeb.TrackerController do
   saves a new reaction in the database from a payload
   """
   def create(conn, params) do
-
     case ReactionTracker.save_reaction(params) do
       {:ok, tracker} -> 
         conn

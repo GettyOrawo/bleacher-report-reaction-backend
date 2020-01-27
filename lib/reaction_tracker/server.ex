@@ -8,8 +8,10 @@ defmodule ReactionTracker.Server do
     GenServer.start_link(__MODULE__, params)
   end
 
-  def save_reaction(pid) do
+  def save_reaction({:ok, pid}) do
+
     GenServer.call(pid, :save_reaction)
+    
   end
 
   #server

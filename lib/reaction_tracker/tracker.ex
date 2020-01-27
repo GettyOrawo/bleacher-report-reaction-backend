@@ -21,7 +21,7 @@ defmodule ReactionTracker.Tracker do
   def changeset(struct, params \\ %{}) do
     struct
     |> cast(params, [:type,:action, :content_id, :user_id, :reaction_type])
-    # |> validate_required([:type,:action, :content_id, :user_id, :reaction_type])
+    |> validate_required([:type,:action, :content_id, :user_id, :reaction_type])
     
   end
 end
