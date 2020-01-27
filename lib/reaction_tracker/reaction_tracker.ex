@@ -2,7 +2,7 @@ defmodule ReactionTracker do
   @moduledoc """
   This is the context module where all miscelanious functions reside
   """
-  alias ReactionTracker.{Repo, Tracker, Cache}
+  alias ReactionTracker.{Cache, Repo, Server, Tracker}
   import Ecto.Query, only: [from: 2]
   import Ecto.Changeset
 
@@ -29,14 +29,15 @@ defmodule ReactionTracker do
   """
 
   def save_reaction(params) do
-    ## start server
+    ## start caching server
     pid = Cache.start_link(params)
     
+    Cache.create(pid, params)
 
-
+    ##start server
     pid = ReactionTracker.Server.start_link(params)
 
-    IO.inspect ReactionTracker.Server.save_reaction(pid), label: "###########"
+    Server.save_reaction(pid)
 
   end
 
