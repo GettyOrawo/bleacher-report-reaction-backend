@@ -34,7 +34,6 @@ defmodule ReactionTrackerWeb.TrackerController do
   saves a new reaction in the database from a payload
   """
   def create(conn, params) do
-
     case ReactionTracker.save_reaction(params) do
       {:ok, tracker} -> 
         conn
@@ -46,6 +45,11 @@ defmodule ReactionTrackerWeb.TrackerController do
         |> render(ErrorView, "422.json", %{errors: errors})
     end
   end
+
+  @doc """
+  displays reactions with similar content Id's with action: "add" and their count
+  """
+
 
   def reaction_counts(conn, %{"content_id" => content_id}) do
 

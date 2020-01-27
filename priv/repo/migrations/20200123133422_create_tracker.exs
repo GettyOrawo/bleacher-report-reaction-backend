@@ -11,5 +11,6 @@ defmodule ReactionTracker.Repo.Migrations.CreateTracker do
 
       timestamps()
     end
+    create unique_index(:reaction_tracker, [:user_id])
   end
 end

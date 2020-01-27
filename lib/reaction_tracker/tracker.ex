@@ -1,4 +1,7 @@
 defmodule ReactionTracker.Tracker do
+  @moduledoc """
+  This is the Tracker Schema module
+  """
   use Ecto.Schema
   import Ecto.Changeset
 
@@ -19,6 +22,6 @@ defmodule ReactionTracker.Tracker do
     struct
     |> cast(params, [:type,:action, :content_id, :user_id, :reaction_type])
     |> validate_required([:type,:action, :content_id, :user_id, :reaction_type])
-    |> unique_constraint(:user_id)
+    
   end
 end
