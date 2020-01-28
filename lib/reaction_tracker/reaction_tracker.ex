@@ -42,6 +42,9 @@ defmodule ReactionTracker do
   end
 
   def create_or_update_reaction(params) do
+
+    {:ok, params} = Map.keys(params) |> List.first() |> Jason.decode()
+
     #convert params map keys from strings to atoms
     params = for {key, value} <- params, into: %{}, do: {String.to_atom(key), value}
 
